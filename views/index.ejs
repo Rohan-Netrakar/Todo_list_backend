@@ -1,11 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header>
+      <h2>To-Do List</h2>
+    </header>
+
+    <!-- Add Task Form -->
+    <form action="/add" method="POST" class="add-form">
+      <input type="text" name="task" placeholder="Enter new task..." required />
+      <button type="submit" class="add">Add</button>
+    </form>
+
+    <!-- Task List -->
+    <div class="task-section">
+      <% if (locals.tasks && locals.tasks.length > 0) { %>
+        <ul class="tasks">
+          <% tasks.forEach((task, i) => { %>
+            <li>
+              <%= task.title %>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p>No tasks yet. Please add your first task!</p>
+      <% } %>
+    </div>
+
+    <footer>
+      <p>© 2025 To-Do List</p>
+    </footer>
+  </body>
 </html>
