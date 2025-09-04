@@ -17,14 +17,19 @@
       <button type="submit" class="add">Add</button>
     </form>
 
+    <!-- Single Delete Button (removes the first task only) -->
+    <% if (locals.tasks && locals.tasks.length > 0) { %>
+      <form action="/delete-first" method="POST" style="margin-top: 10px;">
+        <button type="submit" class="delete">Delete Task</button>
+      </form>
+    <% } %>
+
     <!-- Task List -->
     <div class="task-section">
       <% if (locals.tasks && locals.tasks.length > 0) { %>
         <ul class="tasks">
-          <% tasks.forEach((task, i) => { %>
-            <li>
-              <%= task %>
-            </li>
+          <% locals.tasks.forEach((task) => { %>
+            <li><%= task %></li>
           <% }) %>
         </ul>
       <% } else { %>
