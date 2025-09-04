@@ -24,13 +24,17 @@ app.get('/', (req, res) => {
 });
 
 //Add router
-
-
 app.post("/add",(req,res)=>{
     const {task}= req.body;
     console.log(task);
     taskes.push(task);
     // res.render("index",{tasks:taskes})
+    res.redirect("/");
+});
+
+//Delete router
+app.post("/delete-first",(req,res)=>{
+    taskes.shift();
     res.redirect("/");
 });
 
