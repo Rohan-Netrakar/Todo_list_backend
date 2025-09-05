@@ -65,3 +65,19 @@
 //     res.status(500).send("Database error");
 //   }
 // });
+
+
+//to RESET id sequence after delete
+// try {
+//     const query = `
+//       ALTER SEQUENCE "Todo_list_backend_id_seq" RESTART WITH 1;
+//       UPDATE Todo_list_backend
+//       SET id = DEFAULT;
+//     `;
+//     await db.query(query);
+//     res.send('Id sequence reset successfully!');
+//   } catch (err) {
+//     console.error("Error resetting ids", err.stack);
+//     res.status(500).send("Database error");
+//   }
+// });
