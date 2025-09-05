@@ -4,6 +4,7 @@ import pg from "pg";
 import path from "path";
 import { fileURLToPath } from "url";
 
+//data bace connect
 const db = new pg.Client({
   user: "postgres",
   host: "localhost",
