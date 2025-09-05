@@ -67,17 +67,22 @@
 // });
 
 
-//to RESET id sequence after delete
+//to REORDER ids sequentially
 // try {
 //     const query = `
-//       ALTER SEQUENCE "Todo_list_backend_id_seq" RESTART WITH 1;
-//       UPDATE Todo_list_backend
-//       SET id = DEFAULT;
+//       WITH reordered AS (
+//         SELECT id, ROW_NUMBER() OVER (ORDER BY id) AS new_id
+//         FROM Todo_list_backend
+//       )
+//       UPDATE Todo_list_backend t
+//       SET id = r.new_id
+//       FROM reordered r
+//       WHERE t.id = r.id;
 //     `;
 //     await db.query(query);
-//     res.send('Id sequence reset successfully!');
+//     res.send('IDs reordered successfully!');
 //   } catch (err) {
-//     console.error("Error resetting ids", err.stack);
-//     res.status(500).send("Database error");
+//     console.error("Error reordering IDs", err.stack);
+//     res.status(500).send('Database error');
 //   }
 // });
