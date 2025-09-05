@@ -49,3 +49,19 @@
 //     res.status(500).send("Database error");
 //   }
 // });
+
+
+//to SELECT and display all tasks with id in descending order
+// try {
+//     const query = `
+//       SELECT id, task
+//       FROM Todo_list_backend
+//       ORDER BY id DESC
+//     `;
+//     const result = await db.query(query);
+//     res.render('index', { tasks: result.rows });
+//   } catch (err) {
+//     console.error("Error retrieving tasks", err.stack);
+//     res.status(500).send("Database error");
+//   }
+// });
