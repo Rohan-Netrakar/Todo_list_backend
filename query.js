@@ -65,3 +65,24 @@
 //     res.status(500).send("Database error");
 //   }
 // });
+
+
+//to REORDER ids sequentially
+// try {
+//     const query = `
+//       WITH reordered AS (
+//         SELECT id, ROW_NUMBER() OVER (ORDER BY id) AS new_id
+//         FROM Todo_list_backend
+//       )
+//       UPDATE Todo_list_backend t
+//       SET id = r.new_id
+//       FROM reordered r
+//       WHERE t.id = r.id;
+//     `;
+//     await db.query(query);
+//     res.send('IDs reordered successfully!');
+//   } catch (err) {
+//     console.error("Error reordering IDs", err.stack);
+//     res.status(500).send('Database error');
+//   }
+// });
