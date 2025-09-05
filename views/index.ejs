@@ -4,9 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To-Do List</title>
-    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/style.css">
+
   </head>
   <body>
+    <!-- Bubbles background -->
+    <div class="bubble blue" style="width:200px; height:200px; top:15%; left:8%;"></div>
+    <div class="bubble pink" style="width:300px; height:300px; top:65%; left:70%;"></div>
+    <div class="bubble purple" style="width:150px; height:150px; top:30%; left:85%;"></div>
+    <div class="bubble green" style="width:220px; height:220px; top:75%; left:18%;"></div>
+    <div class="bubble blue" style="width:120px; height:120px; top:85%; left:50%;"></div>
+
     <header>
       <h2>To-Do List</h2>
     </header>
@@ -19,30 +27,28 @@
 
     <!-- Single Delete Button (removes the first task only) -->
     <% if (locals.tasks && locals.tasks.length > 0) { %>
-      <form action="/delete-first" method="POST" style="margin-top: 10px;">
+      <form action="/delete-first" method="POST" style="margin-top: 10px; z-index:2; position:relative;">
         <button type="submit" class="delete">Delete Task</button>
       </form>
     <% } %>
 
-<!-- Task List  for array of objects-->
-<div class="task-section">
-  <% if (locals.tasks && locals.tasks.length > 0) { %>
-    <ul class="tasks">
-      <% locals.tasks.forEach((t) => { %>
-        <li>
-          <%= t.task %>
-          <form action="/delete/<%= t.id %>" method="POST" style="display:inline;">
-            <button type="submit" class="delete">Delete</button>
-          </form>
-        </li>
-      <% }) %>
-    </ul>
-  <% } else { %>
-    <p>No tasks yet. Please add your first task!</p>
-  <% } %>
-</div>
-
-
+    <!-- Task List for array of objects -->
+    <div class="task-section">
+      <% if (locals.tasks && locals.tasks.length > 0) { %>
+        <ul class="tasks">
+          <% locals.tasks.forEach((t) => { %>
+            <li>
+              <%= t.task %>
+              <form action="/delete/<%= t.id %>" method="POST" style="display:inline;">
+                <button type="submit" class="delete">Delete</button>
+              </form>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p>No tasks yet. Please add your first task!</p>
+      <% } %>
+    </div>
 
     <footer>
       <p>© 2025 To-Do List</p>
