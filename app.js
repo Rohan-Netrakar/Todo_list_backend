@@ -77,12 +77,24 @@ app.post("/delete/:id",async (req, res) => {
 const id = req.params.id;
 console.log(id);
   try {
-    const query = `
+    const query1 = `
       DELETE FROM Todo_list_backend 
       WHERE id = $1
     `;
-    await db.query(query, [id]);
+    await db.query(query1, [id]);
     //res.send('Todo_list_backend deleted successfully!');
+
+    const query2 = `
+      WITH reordered AS (
+        SELECT id, ROW_NUMBER() OVER (ORDER BY id) AS new_id
+        FROM Todo_list_backend
+      )
+      UPDATE Todo_list_backend t
+      SET id = r.new_id
+      FROM reordered r
+      WHERE t.id = r.id;
+    `;
+    await db.query(query2);
     res.redirect("/");
   } catch (err) {
     console.error("Error deleting Todo_list_backend", err.stack);
