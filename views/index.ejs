@@ -24,18 +24,24 @@
       </form>
     <% } %>
 
-    <!-- Task List -->
-    <div class="task-section">
-      <% if (locals.tasks && locals.tasks.length > 0) { %>
-        <ul class="tasks">
-          <% locals.tasks.forEach((task) => { %>
-            <li><%= task %></li>
-          <% }) %>
-        </ul>
-      <% } else { %>
-        <p>No tasks yet. Please add your first task!</p>
-      <% } %>
-    </div>
+<!-- Task List -->
+<div class="task-section">
+  <% if (locals.tasks && locals.tasks.length > 0) { %>
+    <ul class="tasks">
+      <% locals.tasks.forEach((t) => { %>
+        <li>
+          <%= t.task %>
+          <form action="/delete/<%= t.id %>" method="POST" style="display:inline;">
+            <button type="submit" class="delete">Delete</button>
+          </form>
+        </li>
+      <% }) %>
+    </ul>
+  <% } else { %>
+    <p>No tasks yet. Please add your first task!</p>
+  <% } %>
+</div>
+
 
     <footer>
       <p>© 2025 To-Do List</p>
