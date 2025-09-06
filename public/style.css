@@ -10,8 +10,8 @@ body {
   background: linear-gradient(to right, #e0f7fa, #f3e5f5);
   height: 100vh;
   display: flex;
-  justify-content: center;   /* Horizontal center */
-  align-items: center;       /* Vertical center */
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
   position: relative;
 }
@@ -22,8 +22,8 @@ body {
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  width: 400px;
-  max-height: 80vh;         /* Prevent overflow */
+  width: 600px;             /* ✅ wider so input + buttons fit */
+  max-height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,6 +46,7 @@ header h2 {
   display: flex;
   gap: 10px;
   margin-bottom: 10px;
+  width: 100%;
 }
 
 .add-form input {
@@ -79,7 +80,7 @@ header h2 {
   margin-top: 15px;
   width: 100%;
   flex: 1;
-  overflow-y: auto;  /* ✅ Scroll when too many tasks */
+  overflow-y: auto;
   padding-right: 5px;
 }
 
@@ -88,6 +89,7 @@ header h2 {
   padding: 0;
 }
 
+/* Each task row */
 .task-list li {
   background: #f9f9f9;
   margin: 8px 0;
@@ -96,16 +98,75 @@ header h2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 15px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-.task-list .delete-btn {
-  background: #ff4b5c;
+/* Left side: text or input */
+.task-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.task-text {
+  font-size: 1rem;
+  word-break: break-word;
+  flex: 1;
+}
+
+.edit-input {
+  display: none;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 100%;
+  font-size: 1rem;
+}
+
+/* Right side: buttons */
+.task-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0; /* ✅ prevents buttons from moving down */
+}
+
+/* Common button style */
+.edit-btn,
+.save-btn,
+.delete-btn {
+  padding: 6px 12px;
   border: none;
   border-radius: 6px;
-  padding: 6px 12px;
   color: #fff;
   cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s ease;
+}
+
+/* Edit Button - Blue */
+.edit-btn {
+  background: #2196f3;
+}
+.edit-btn:hover {
+  background: #1976d2;
+}
+
+/* Save Button - Orange */
+.save-btn {
+  background: #ff9800;
+  display: none;
+}
+.save-btn:hover {
+  background: #e68900;
+}
+
+/* Delete Button - Red */
+.delete-btn {
+  background: #ff4b5c;
+}
+.delete-btn:hover {
+  background: #d32f2f;
 }
 
 /* Footer */

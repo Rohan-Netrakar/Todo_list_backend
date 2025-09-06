@@ -1,56 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>To-Do List</title>
-    <link rel="stylesheet" href="/style.css">
-  </head>
-  <body>
-    <!-- Bubbles -->
-    <div class="bubble blue"></div>
-    <div class="bubble pink"></div>
-    <div class="bubble purple"></div>
-    <div class="bubble green"></div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <!-- Floating bubbles -->
+  <div class="bubble blue"></div>
+  <div class="bubble pink"></div>
+  <div class="bubble purple"></div>
+  <div class="bubble green"></div>
 
-    <div class="container">
-      <header>
-        <h2>To-Do List</h2>
-      </header>
+  <!-- Container -->
+  <div class="container">
+    <header>
+      <h2>To-Do List</h2>
+    </header>
 
-      <!-- Add Task Form -->
-      <form action="/add" method="POST" class="add-form">
-        <input type="text" name="task" placeholder="Enter new task..." required />
-        <button type="submit" class="add">Add</button>
-      </form>
+    <!-- Add Task Form -->
+    <form action="/add" method="POST" class="add-form">
+      <input type="text" name="task" placeholder="Enter a task..." required>
+      <button type="submit" class="add">Add</button>
+    </form>
 
-      <% if (locals.tasks && locals.tasks.length > 0) { %>
-        <form action="/delete-first" method="POST" style="margin-top: 10px;">
-          <button type="submit" class="delete">Delete Task</button>
-        </form>
-      <% } %>
+    <!-- Task Section -->
+    <section class="task-section">
+      <ul class="task-list">
+        <% tasks.forEach((task) => { %>
+          <li>
+            <!-- Left side: task text / input -->
+            <div class="task-content">
+              <span class="task-text"><%= task.task %></span>
+              <input class="edit-input" type="text" name="editedTask" value="<%= task.task %>">
+            </div>
 
-      <!-- Task List -->
-      <div class="task-section">
-        <% if (locals.tasks && locals.tasks.length > 0) { %>
-          <ul class="task-list">
-            <% locals.tasks.forEach((t) => { %>
-              <li>
-                <%= t.task %>
-                <form action="/delete/<%= t.id %>" method="POST" style="display:inline;">
-                  <button type="submit" class="delete-btn">Delete</button>
-                </form>
-              </li>
-            <% }) %>
-          </ul>
-        <% } else { %>
-          <p>No tasks yet. Please add your first task!</p>
-        <% } %>
-      </div>
+            <!-- Right side: buttons -->
+            <div class="task-actions">
+              <form action="/edit/<%= task.id %>" method="POST" class="edit-form">
+                <button type="button" class="edit-btn">Edit</button>
+                <button type="submit" class="save-btn">Save</button>
+              </form>
+              <form action="/delete/<%= task.id %>" method="POST">
+                <button type="submit" class="delete-btn">Delete</button>
+              </form>
+            </div>
+          </li>
+        <% }) %>
+      </ul>
+    </section>
 
-      <footer>
-        <p>© 2025 To-Do List</p>
-      </footer>
-    </div>
-  </body>
+    <footer>
+      <p>TO DO LIST @ 2025</p>
+    </footer>
+  </div>
+
+  <script>
+    document.querySelectorAll(".edit-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const li = btn.closest("li");
+        const text = li.querySelector(".task-text");
+        const input = li.querySelector(".edit-input");
+        const save = li.querySelector(".save-btn");
+
+        // Toggle editing mode
+        text.style.display = "none";
+        input.style.display = "block";
+        btn.style.display = "none";
+        save.style.display = "inline-block";
+      });
+    });
+  </script>
+</body>
 </html>
