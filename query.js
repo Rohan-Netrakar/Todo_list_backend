@@ -86,3 +86,18 @@
 //     res.status(500).send('Database error');
 //   }
 // });
+
+//to UPDATE (edit) a Todo_list_backend item by id
+// try {
+//     const query = `
+//       UPDATE Todo_list_backend
+//       SET task = $1
+//       WHERE id = $2
+//     `;
+//     await db.query(query, [editedTask, id]);
+//     res.send('Todo_list_backend updated successfully!');
+//   } catch (err) {
+//     console.error("Error updating Todo_list_backend", err.stack);
+//     res.status(500).send('Database error');
+//   }
+// });
