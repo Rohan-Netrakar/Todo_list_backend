@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>To-Do List</title>
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
   <!-- Floating bubbles -->
@@ -21,7 +21,7 @@
 
     <!-- Add Task Form -->
     <form action="/add" method="POST" class="add-form">
-      <input type="text" name="task" placeholder="Enter a task..." required>
+      <input type="text" name="task" placeholder="Enter a task..." required />
       <button type="submit" class="add">Add</button>
     </form>
 
@@ -33,12 +33,13 @@
             <!-- Left side: task text / input -->
             <div class="task-content">
               <span class="task-text"><%= task.task %></span>
-              <input class="edit-input" type="text" name="editedTask" value="<%= task.task %>">
+              <input class="edit-input" type="text" value="<%= task.task %>" />
             </div>
 
             <!-- Right side: buttons -->
             <div class="task-actions">
               <form action="/edit/<%= task.id %>" method="POST" class="edit-form">
+                <input type="hidden" name="editedTask" class="hidden-input" value="<%= task.task %>">
                 <button type="button" class="edit-btn">Edit</button>
                 <button type="submit" class="save-btn">Save</button>
               </form>
@@ -63,12 +64,21 @@
         const text = li.querySelector(".task-text");
         const input = li.querySelector(".edit-input");
         const save = li.querySelector(".save-btn");
+        const hiddenInput = li.querySelector(".hidden-input");
 
         // Toggle editing mode
         text.style.display = "none";
         input.style.display = "block";
         btn.style.display = "none";
         save.style.display = "inline-block";
+
+        // Initialize hidden input value
+        hiddenInput.value = input.value;
+
+        // Update hidden input whenever user types
+        input.addEventListener("input", () => {
+          hiddenInput.value = input.value;
+        });
       });
     });
   </script>
