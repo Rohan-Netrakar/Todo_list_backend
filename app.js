@@ -103,7 +103,28 @@ console.log(id);
 
 });
 
-app.post("/edit", (req, res) => {});
+//edit router
+app.post("/edit/:id", async (req, res) => {
+  const id = req.params.id;
+  const { editedTask } = req.body;
+  console.log(id);
+  console.log(editedTask);
+  try {
+    const query = `
+      UPDATE Todo_list_backend
+      SET task = $1
+      WHERE id = $2
+    `;
+    await db.query(query, [editedTask, id]);
+    // res.send('Todo_list_backend updated successfully!');
+    res.redirect("/");
+  } catch (err) {
+    console.error("Error updating Todo_list_backend", err.stack);
+    res.status(500).send('Database error');
+  }
+});
+
+
 
 // Start server
 app.listen(port, () => {
