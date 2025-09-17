@@ -1,17 +1,41 @@
 import express from "express";
 import bodyParser from "body-parser";
-import pg from "pg";
+import { Pool } from "pg";
 import path from "path";
 import { fileURLToPath } from "url";
 
 //data bace connect
-const db = new pg.Client({
-  user: "postgres",
-  host: "localhost",
-  database: "world",
-  password: "Rohan@25",
+// const db = new pg.Client({
+//   user: "postgres",
+//   host: "localhost",
+//   database: "world",
+//   password: "Rohan@25",
+//   port: 5432,
+// });
+
+
+
+const pool = new Pool({
+  user: "helloejsapp",
+  host: "dpg-d3543uur433s738gjdug-a.oregon-postgres.render.com",
+  database: "helloejsapp",
+  password: "6jBglwqG3C3VitJtE3rmJ8mz5ZcHceKx",
   port: 5432,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
+
+
+pool.connect()
+  .then(client => {
+    console.log("Database connected");
+    client.release();
+  })
+  .catch(err => {
+    console.error("Database connection error", err.stack);
+  });
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,7 +43,7 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const port = 3000;
 
-db.connect();
+// db.connect();
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -37,7 +61,7 @@ app.get("/", async (req, res) => {
       FROM Todo_list_backend 
       ORDER BY id ASC
     `;
-    const result = await db.query(query);
+    const result = await pool.query(query);
     res.render("index", { tasks: result.rows });
   } catch (err) {
     console.error("Error retrieving Todo_list_backends", err.stack);
@@ -60,7 +84,7 @@ app.post("/add", async (req, res) => {
       INSERT INTO Todo_list_backend (task)
       VALUES ($1)
     `;
-    await db.query(query, [task]);
+    await pool.query(query, [task]);
     //res.send(`${task} added successfully!`);
     res.redirect("/");
   } catch (err) {
@@ -81,7 +105,7 @@ console.log(id);
       DELETE FROM Todo_list_backend 
       WHERE id = $1
     `;
-    await db.query(query1, [id]);
+    await pool.query(query1, [id]);
     //res.send('Todo_list_backend deleted successfully!');
 
     const query2 = `
@@ -94,7 +118,7 @@ console.log(id);
       FROM reordered r
       WHERE t.id = r.id;
     `;
-    await db.query(query2);
+    await pool.query(query2);
     res.redirect("/");
   } catch (err) {
     console.error("Error deleting Todo_list_backend", err.stack);
@@ -115,7 +139,7 @@ app.post("/edit/:id", async (req, res) => {
       SET task = $1
       WHERE id = $2
     `;
-    await db.query(query, [editedTask, id]);
+    await pool.query(query, [editedTask, id]);
     // res.send('Todo_list_backend updated successfully!');
     res.redirect("/");
   } catch (err) {
